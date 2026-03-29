@@ -1,0 +1,360 @@
+<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<style>
+  .section-header {
+    margin-bottom: 0 !important;
+  }
+
+  .header-wrapper {
+    background: #000000 !important;
+    border-bottom: none !important;
+  }
+
+  .header-wrapper .page-width {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .rp-header {
+    max-width: 1280px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    background: #000000;
+  }
+
+  .rp-header__brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    flex: 0 0 auto;
+  }
+
+  .rp-header__logo-wrap img,
+  .rp-header__logo-wrap .header__heading-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .rp-header__title {
+    color: #ffffff;
+    font-family: "Playfair Display", serif;
+    font-size: 3.4rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .rp-header__navbox {
+    flex: 1;
+    background: #ffffff;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+
+  .rp-header__navinner {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .rp-header__menu {
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .rp-header__menu ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .rp-header__menu a {
+    text-decoration: none;
+    color: #111111;
+    font-size: 1.45rem;
+    font-family: "Playfair Display", serif;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .rp-header__search {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .rp-header__search form {
+    width: 100%;
+    max-width: 300px;
+    height: 36px;
+    border: 1px solid #dddddd;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+  }
+
+  .rp-header__search input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    padding: 0 10px;
+    font-size: 1.3rem;
+    font-family: "Playfair Display", serif;
+    background: transparent;
+  }
+
+  .rp-header__search button {
+    width: 40px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #111111;
+    padding: 0;
+  }
+
+  .rp-header__search button .svg-wrapper,
+  .rp-header__search button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .rp-mobile-header {
+    display: none;
+  }
+
+  @media screen and (max-width: 1100px) {
+    .rp-header__title {
+      font-size: 2.8rem;
+    }
+
+    .rp-header__logo-wrap img,
+    .rp-header__logo-wrap .header__heading-logo {
+      width: 72px;
+      height: 72px;
+    }
+
+    .rp-header__menu ul {
+      gap: 18px;
+    }
+
+    .rp-header__menu a {
+      font-size: 1.25rem;
+    }
+
+    .rp-header__navinner {
+      grid-template-columns: 1fr 260px;
+      gap: 14px;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .rp-header {
+      display: none;
+    }
+
+    .rp-mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: #000000;
+      gap: 10px;
+    }
+
+    .rp-mobile-header__left,
+    .rp-mobile-header__right {
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 44px;
+      overflow: visible;
+    }
+
+    .rp-mobile-header__center {
+      min-width: 0;
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .rp-mobile-header__brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .rp-mobile-header__brand img,
+    .rp-mobile-header__brand .header__heading-logo {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .rp-mobile-header__title {
+      color: #ffffff;
+      font-family: "Playfair Display", serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .rp-mobile-header .header__icon,
+    .rp-mobile-header summary.header__icon,
+    .rp-mobile-header .modal__toggle {
+      color: #ffffff !important;
+    }
+
+    .rp-mobile-header details,
+    .rp-mobile-header summary {
+      display: flex;
+      align-items: center;
+    }
+
+    .rp-mobile-header .header__icon--search .svg-wrapper,
+    .rp-mobile-header .header__icon--search svg {
+      width: 22px;
+      height: 22px;
+    }
+  }
+</style>
+
+<div class="header-wrapper">
+  <header class="page-width">
+
+    <div class="rp-header">
+      <a href="{{ routes.root_url }}" class="rp-header__brand">
+        {% if settings.logo != blank %}
+          <span class="rp-header__logo-wrap">
+            {% assign logo_alt = settings.logo.alt | default: shop.name | escape %}
+            {% assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio %}
+            {{
+              settings.logo
+              | image_url: width: 300
+              | image_tag:
+                class: 'header__heading-logo motion-reduce',
+                widths: '120, 180, 240, 300',
+                width: settings.logo_width,
+                height: logo_height,
+                alt: logo_alt,
+                preload: true
+            }}
+          </span>
+        {% endif %}
+
+        <span class="rp-header__title">{{ shop.name }}</span>
+      </a>
+
+      <div class="rp-header__navbox">
+        <div class="rp-header__navinner">
+
+          <div class="rp-header__menu">
+            <ul>
+              <li><a href="{{ routes.root_url }}">Inicio</a></li>
+              <li><a href="/collections/all">Catálogo</a></li>
+              <li><a href="/pages/promociones">Promociones</a></li>
+              <li><a href="/pages/sobre-nosotros">Sobre nosotros</a></li>
+              <li><a href="/pages/contacto">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div class="rp-header__search">
+            <form action="{{ routes.search_url }}" method="get" role="search">
+              <input
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="Search in site"
+                autocomplete="off"
+              >
+              <input type="hidden" name="options[prefix]" value="last">
+              <button type="submit" aria-label="{{ 'general.search.search' | t }}">
+                <span class="svg-wrapper">
+                  {{- 'icon-search.svg' | inline_asset_content -}}
+                </span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="rp-mobile-header">
+      <div class="rp-mobile-header__left">
+        {% render 'header-drawer' %}
+      </div>
+
+      <div class="rp-mobile-header__center">
+        <a href="{{ routes.root_url }}" class="rp-mobile-header__brand">
+          {% if settings.logo != blank %}
+            {% assign logo_alt = settings.logo.alt | default: shop.name | escape %}
+            {% assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio %}
+            {{
+              settings.logo
+              | image_url: width: 200
+              | image_tag:
+                class: 'header__heading-logo motion-reduce',
+                widths: '100, 150, 200',
+                width: settings.logo_width,
+                height: logo_height,
+                alt: logo_alt
+            }}
+          {% endif %}
+          <span class="rp-mobile-header__title">{{ shop.name }}</span>
+        </a>
+      </div>
+
+      <div class="rp-mobile-header__right">
+        {% render 'header-search', input_id: 'Search-Mobile' %}
+      </div>
+    </div>
+
+  </header>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "default": "main-menu",
+      "label": "Menu"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "Menu color scheme",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}
