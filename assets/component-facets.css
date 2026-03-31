@@ -1255,3 +1255,30 @@ input.mobile-facets__checkbox {
     padding: 0 1rem 1rem;
   }
 }
+ 
+@media screen and (max-width: 749px) {
+  .catalogo-scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    color: rgba(var(--color-foreground), 0.65);
+    letter-spacing: 0.02rem;
+  }
+
+  .catalogo-scroll-hint-arrow {
+    display: inline-block;
+    animation: catalogoHintMove 1.2s ease-in-out infinite;
+  }
+
+  @keyframes catalogoHintMove {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+  }
+}

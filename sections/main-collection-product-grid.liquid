@@ -22,6 +22,13 @@
   <script src="{{ 'quick-order-list.js' | asset_url }}" defer="defer"></script>
 {%- endif -%}
 
+{%- liquid
+  assign is_promotions_collection = false
+  if collection.handle == 'promociones'
+    assign is_promotions_collection = true
+  endif
+-%}
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -34,131 +41,176 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .collection-promociones-hero {
+    margin-bottom: 2.4rem;
+  }
+
+  .collection-promociones-hero__eyebrow {
+    display: inline-block;
+    margin: 0 0 0.8rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .collection-promociones-hero__title {
+    margin: 0;
+  }
+
+  .collection-promociones-hero__description {
+    margin: 1rem 0 0;
+    max-width: 72rem;
+    opacity: 0.82;
+  }
+
+  .collection-promociones-grid {
+    row-gap: 2.4rem;
+  }
+
+  .collection-promociones-empty {
+    text-align: center;
+    padding: 5rem 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-promociones-hero {
+      margin-bottom: 1.8rem;
+    }
+
+    .collection-promociones-grid {
+      row-gap: 1.8rem;
+    }
+  }
 {%- endstyle -%}
 
 <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}">
   {%- paginate collection.products by section.settings.products_per_page -%}
-    {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
-    {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
-      <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
-        <form class="facets-vertical-form" id="FacetSortForm">
-          <div class="facet-filters sorting caption">
-            <div class="facet-filters__field">
-              <h2 class="facet-filters__label caption-large text-body">
-                <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-              </h2>
-              <div class="select">
-                {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-                <select
-                  name="sort_by"
-                  class="facet-filters__sort select__select caption-large"
-                  id="SortBy"
-                  aria-describedby="a11y-refresh-page-message"
-                >
-                  {%- for option in collection.sort_options -%}
-                    {% unless option.value == 'best-selling' or option.value == 'manual' %}
-                      <option
-                        value="{{ option.value | escape }}"
-                        {% if option.value == sort_by %}
-                          selected="selected"
-                        {% endif %}
-                      >
-                        {{ option.name | escape }}
-                      </option>
-                    {% endunless %}
-                  {%- endfor -%}
-                </select>
-                <span class="svg-wrapper">
-                  {{- 'icon-caret.svg' | inline_asset_content -}}
-                </span>
+
+    {% unless is_promotions_collection %}
+      {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
+      {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+        <facet-filters-form class="facets facets-vertical-sort page-width small-hide">
+          <form class="facets-vertical-form" id="FacetSortForm">
+            <div class="facet-filters sorting caption">
+              <div class="facet-filters__field">
+                <h2 class="facet-filters__label caption-large text-body">
+                  <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+                </h2>
+                <div class="select">
+                  {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                  <select
+                    name="sort_by"
+                    class="facet-filters__sort select__select caption-large"
+                    id="SortBy"
+                    aria-describedby="a11y-refresh-page-message"
+                  >
+                    {%- for option in collection.sort_options -%}
+                      {% unless option.value == 'best-selling' or option.value == 'manual' %}
+                        <option
+                          value="{{ option.value | escape }}"
+                          {% if option.value == sort_by %}
+                            selected="selected"
+                          {% endif %}
+                        >
+                          {{ option.name | escape }}
+                        </option>
+                      {% endunless %}
+                    {%- endfor -%}
+                  </select>
+                  <span class="svg-wrapper">
+                    {{- 'icon-caret.svg' | inline_asset_content -}}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="product-count-vertical light" role="status">
-            <h2 class="product-count__text text-body">
-              <span id="ProductCountDesktop">
-                {%- if collection.results_count -%}
-                  {{
-                    'templates.search.results_with_count'
-                    | t: terms: collection.terms, count: collection.results_count
-                  }}
-                {%- elsif collection.products_count == collection.all_products_count -%}
-                  {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
-                {%- else -%}
-                  {{
-                    'products.facets.product_count'
-                    | t: product_count: collection.products_count, count: collection.all_products_count
-                  }}
-                {%- endif -%}
-              </span>
-            </h2>
-            {%- render 'loading-spinner' -%}
-          </div>
-        </form>
-      </facet-filters-form>
-    {%- endif -%}
-
-    <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
-      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
-        <aside
-          aria-labelledby="verticalTitle"
-          class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-          id="main-collection-filters"
-          data-id="{{ section.id }}"
-        >
-          {% assign current_handle = collection.handle %}
-
-          <div class="catalogo-filtros-mockup page-width">
-            <div class="catalogo-filtros-mockup__grupo catalogo-filtros-mockup__grupo--gamas">
-              <a
-                href="{{ routes.all_products_collection_url }}"
-                class="catalogo-filtro-btn {% if current_handle == 'all' %}is-active{% endif %}"
-              >
-                Todos
-              </a>
-
-              <a
-                href="{{ shop.url }}/collections/doble-a"
-                class="catalogo-filtro-btn {% if current_handle == 'doble-a' %}is-active{% endif %}"
-              >
-                Doble A
-              </a>
-
-              <a
-                href="{{ shop.url }}/collections/triple-a"
-                class="catalogo-filtro-btn {% if current_handle == 'triple-a' %}is-active{% endif %}"
-              >
-                Triple A
-              </a>
-
-              <a
-                href="{{ shop.url }}/collections/originales"
-                class="catalogo-filtro-btn {% if current_handle == 'originales' %}is-active{% endif %}"
-              >
-                Originales
-              </a>
-
-              <a
-                href="{{ shop.url }}/collections/doble-a-premium"
-                class="catalogo-filtro-btn {% if current_handle == 'doble-a-premium' %}is-active{% endif %}"
-              >
-                Doble A Premium
-              </a>
-
-              <a
-                href="{{ shop.url }}/collections/promociones"
-                class="catalogo-filtro-btn {% if current_handle == 'promociones' %}is-active{% endif %}"
-              >
-                Promociones
-              </a>
-
-              
+            <div class="product-count-vertical light" role="status">
+              <h2 class="product-count__text text-body">
+                <span id="ProductCountDesktop">
+                  {%- if collection.results_count -%}
+                    {{
+                      'templates.search.results_with_count'
+                      | t: terms: collection.terms, count: collection.results_count
+                    }}
+                  {%- elsif collection.products_count == collection.all_products_count -%}
+                    {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+                  {%- else -%}
+                    {{
+                      'products.facets.product_count'
+                      | t: product_count: collection.products_count, count: collection.all_products_count
+                    }}
+                  {%- endif -%}
+                </span>
+              </h2>
+              {%- render 'loading-spinner' -%}
             </div>
+          </form>
+        </facet-filters-form>
+      {%- endif -%}
+    {% endunless %}
 
-            {% if section.settings.enable_filtering and collection.filters != empty %}
+    <div class="{% if section.settings.filter_type == 'vertical' and is_promotions_collection == false %}facets-vertical page-width{% endif %}">
+      {% unless is_promotions_collection %}
+        {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+        <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+      {% endunless %}
+
+      {%- unless is_promotions_collection -%}
+        {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+          <aside
+            aria-labelledby="verticalTitle"
+            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+            id="main-collection-filters"
+            data-id="{{ section.id }}"
+          >
+            {% assign current_handle = collection.handle %}
+
+            <div class="catalogo-filtros-mockup page-width">
+              <div class="catalogo-scroll-hint medium-hide large-up-hide">
+                <span>Desliza para ver más</span>
+                <span class="catalogo-scroll-hint-arrow">→</span>
+              </div>
+
+              <div class="catalogo-filtros-mockup__grupo catalogo-filtros-mockup__grupo--gamas">
+                <a
+                  href="{{ routes.all_products_collection_url }}"
+                  class="catalogo-filtro-btn {% if current_handle == 'all' %}is-active{% endif %}"
+                >
+                  Todos
+                </a>
+
+                <a
+                  href="{{ shop.url }}/collections/doble-a"
+                  class="catalogo-filtro-btn {% if current_handle == 'doble-a' %}is-active{% endif %}"
+                >
+                  Doble A
+                </a>
+
+                <a
+                  href="{{ shop.url }}/collections/triple-a"
+                  class="catalogo-filtro-btn {% if current_handle == 'triple-a' %}is-active{% endif %}"
+                >
+                  Triple A
+                </a>
+
+                <a
+                  href="{{ shop.url }}/collections/originales"
+                  class="catalogo-filtro-btn {% if current_handle == 'originales' %}is-active{% endif %}"
+                >
+                  Originales
+                </a>
+
+                <a
+                  href="{{ shop.url }}/collections/doble-a-premium"
+                  class="catalogo-filtro-btn {% if current_handle == 'doble-a-premium' %}is-active{% endif %}"
+                >
+                  Doble A Premium
+                </a>
+              </div>
+
+              {% if section.settings.enable_filtering and collection.filters != empty %}
                 {% for filter in collection.filters %}
                   {% assign filter_label_downcase = filter.label | downcase %}
                   {% assign filter_param_downcase = filter.param_name | downcase %}
@@ -213,17 +265,19 @@
                     </div>
                   {% endif %}
                 {% endfor %}
-            {% endif %}
-          </div>
-          {% render 'facets',
-            results: collection,
-            enable_filtering: section.settings.enable_filtering,
-            enable_sorting: section.settings.enable_sorting,
-            filter_type: section.settings.filter_type,
-            paginate: paginate
-          %}
-        </aside>
-      {%- endif -%}
+              {% endif %}
+            </div>
+
+            {% render 'facets',
+              results: collection,
+              enable_filtering: section.settings.enable_filtering,
+              enable_sorting: section.settings.enable_sorting,
+              filter_type: section.settings.filter_type,
+              paginate: paginate
+            %}
+          </aside>
+        {%- endif -%}
+      {%- endunless -%}
 
       <div
         class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
@@ -233,30 +287,49 @@
         {% endif %}
       >
         {%- if collection.products.size == 0 -%}
-          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+          <div class="collection collection--empty page-width {% if is_promotions_collection %}collection-promociones-empty{% endif %}" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
             <div class="title-wrapper center">
               <h2 class="title title--primary">
-                {{ 'sections.collection_template.empty' | t -}}
-                <br>
-                {{
-                  'sections.collection_template.use_fewer_filters_html'
-                  | t: link: collection.url, class: 'underlined-link link'
-                }}
+                {% if is_promotions_collection %}
+                  No hay promociones disponibles en este momento.
+                {% else %}
+                  {{ 'sections.collection_template.empty' | t -}}
+                  <br>
+                  {{
+                    'sections.collection_template.use_fewer_filters_html'
+                    | t: link: collection.url, class: 'underlined-link link'
+                  }}
+                {% endif %}
               </h2>
             </div>
           </div>
         {%- else -%}
-          <div
-            class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-          >
+          <div class="collection{% if section.settings.filter_type != 'vertical' or is_promotions_collection %} page-width{% endif %}">
+            {% if is_promotions_collection %}
+              <div class="collection-promociones-hero">
+                <span class="collection-promociones-hero__eyebrow">Promociones</span>
+                <h1 class="title title--primary collection-promociones-hero__title">
+                  {{ collection.title }}
+                </h1>
+                {% if collection.description != blank %}
+                  <div class="collection-promociones-hero__description rte">
+                    {{ collection.description }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+
             <div class="loading-overlay gradient"></div>
+
             <ul
               id="product-grid"
               data-id="{{ section.id }}"
               class="
-                grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+                grid product-grid
+                grid--{{ section.settings.columns_mobile }}-col-tablet-down
                 grid--{{ section.settings.columns_desktop }}-col-desktop
+                {% if is_promotions_collection %} collection-promociones-grid{% endif %}
                 {% if section.settings.quick_add == 'bulk' %} collection-quick-add-bulk{% endif %}
               "
             >
@@ -266,6 +339,7 @@
                 {%- if forloop.index > 2 -%}
                   {%- assign lazy_load = true -%}
                 {%- endif -%}
+
                 <li
                   class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                   {% if settings.animations_reveal_on_scroll %}
@@ -286,6 +360,7 @@
                     section_id: section.id
                   %}
                 </li>
+
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
             </ul>
@@ -297,7 +372,9 @@
         {%- endif -%}
       </div>
     </div>
+
   {%- endpaginate -%}
+
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
@@ -341,7 +418,7 @@
           "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__2.label"
         }
       ]
-    },    
+    },
     {
       "type": "color_scheme",
       "id": "color_scheme",

@@ -98,3 +98,77 @@
   margin-top: 0.2rem;
   color: rgba(var(--color-foreground), 0.7);
 }
+/* =========================================================
+   RELOJES PLAZA - AJUSTES DE PRECIO PARA PROMOCIONES
+========================================================= */
+
+.rp-card .price,
+.rp-card__price {
+  margin: 0;
+  line-height: 1.2;
+}
+
+.rp-card .price > *,
+.rp-card__price > * {
+  vertical-align: baseline;
+}
+
+.rp-card .price-item,
+.rp-card__price .price-item {
+  margin-right: 0.6rem;
+}
+
+.rp-card .price-item:last-child,
+.rp-card__price .price-item:last-child {
+  margin-right: 0;
+}
+
+.rp-card .price__sale,
+.rp-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.rp-card .price-item--regular,
+.rp-card .price__regular .price-item--regular,
+.rp-card .price--on-sale .price-item--regular {
+  color: #888888;
+  font-size: 1.2rem;
+  text-decoration: line-through;
+}
+
+.rp-card .price-item--sale,
+.rp-card .price-item--last {
+  color: #e60000;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.rp-card .price__regular .price-item--last {
+  color: #111111;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.rp-card .price__badge-sale,
+.rp-card .price__badge-sold-out {
+  display: none !important;
+}
+
+@media screen and (max-width: 749px) {
+  .rp-card .price-item--sale,
+  .rp-card .price-item--last,
+  .rp-card .price__regular .price-item--last {
+    font-size: 1.7rem;
+  }
+
+  .rp-card .price-item--regular,
+  .rp-card .price__regular .price-item--regular,
+  .rp-card .price--on-sale .price-item--regular {
+    font-size: 1.1rem;
+  }
+}

@@ -59,7 +59,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .js .menu-drawer__navigation .submenu-open {
-  visibility: hidden; /* hide menus from screen readers when hidden by submenu */
+  visibility: hidden;
 }
 
 @media screen and (min-width: 750px) {
@@ -241,3 +241,137 @@ details[open].menu-opening > .menu-drawer__submenu {
     transition: none !important;
   }
 }
+
+/* ============================= */
+/* BUSCADOR DENTRO DEL DRAWER    */
+/* ============================= */
+
+.menu-drawer__search-wrapper,
+.rp-drawer-search {
+  padding: 1.2rem 1.4rem 1rem;
+  background: #0b0b0b;
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+
+.menu-drawer__search-wrapper .header__search,
+.menu-drawer__search-wrapper .search,
+.menu-drawer__search-wrapper .field,
+.menu-drawer__search-wrapper predictive-search,
+.menu-drawer__search-wrapper search-form,
+.rp-drawer-search .header__search,
+.rp-drawer-search .search,
+.rp-drawer-search .field,
+.rp-drawer-search predictive-search,
+.rp-drawer-search search-form {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+
+.menu-drawer__search-wrapper .field,
+.rp-drawer-search .field {
+  position: relative;
+}
+
+.menu-drawer__search-wrapper .field__input,
+.rp-drawer-search .field__input {
+  width: 100% !important;
+  min-height: 4.9rem !important;
+  height: 4.9rem !important;
+  padding: 0 8.4rem 0 1.5rem !important;
+  border-radius: 1.4rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+  font-size: 1.45rem !important;
+  box-shadow: none !important;
+}
+
+.menu-drawer__search-wrapper .field__input::placeholder,
+.rp-drawer-search .field__input::placeholder {
+  color: rgba(255, 255, 255, 0.72) !important;
+  opacity: 1 !important;
+}
+
+.menu-drawer__search-wrapper .field__label,
+.rp-drawer-search .field__label {
+  display: none !important;
+}
+
+.menu-drawer__search-wrapper .search__button,
+.menu-drawer__search-wrapper .reset__button,
+.rp-drawer-search .search__button,
+.rp-drawer-search .reset__button {
+  position: absolute !important;
+  top: 0.2rem !important;
+  height: calc(100% - 0.4rem) !important;
+  width: 4rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  z-index: 3 !important;
+}
+
+.menu-drawer__search-wrapper .search__button,
+.rp-drawer-search .search__button {
+  right: 0.2rem !important;
+}
+
+.menu-drawer__search-wrapper .reset__button,
+.rp-drawer-search .reset__button {
+  right: 4rem !important;
+}
+
+.menu-drawer__search-wrapper .search__button svg,
+.menu-drawer__search-wrapper .reset__button svg,
+.menu-drawer__search-wrapper .search__button .icon,
+.menu-drawer__search-wrapper .reset__button .icon,
+.rp-drawer-search .search__button svg,
+.rp-drawer-search .reset__button svg,
+.rp-drawer-search .search__button .icon,
+.rp-drawer-search .reset__button .icon {
+  width: 1.8rem !important;
+  height: 1.8rem !important;
+}
+
+.menu-drawer__search-wrapper .predictive-search,
+.rp-drawer-search .predictive-search {
+  position: absolute !important;
+  top: calc(100% + 0.5rem) !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  border-radius: 1.2rem !important;
+  overflow: hidden !important;
+  z-index: 20 !important;
+}
+
+/* ocultar el buscador del header superior en móvil */
+@media screen and (max-width: 989px) {
+  .header-wrapper .header__search:not(.menu-drawer__search-wrapper .header__search):not(.rp-drawer-search .header__search) {
+    display: none !important;
+  }
+}
+
+/* ocultar buscador interno del drawer en desktop */
+@media screen and (min-width: 990px) {
+  .menu-drawer__search-wrapper,
+  .rp-drawer-search {
+    display: none !important;
+  }
+  .reset__button,
+.rp-drawer-search .reset__button,
+.menu-drawer__search-wrapper .reset__button {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+}
+

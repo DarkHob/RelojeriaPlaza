@@ -18,7 +18,7 @@
 
   .rp-header {
     max-width: 1280px;
-    margin: auto;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -54,16 +54,20 @@
   .rp-header__navbox {
     flex: 1;
     background: #ffffff;
-    height: 52px;
+    min-height: 58px;
     display: flex;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 22px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 0 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   }
 
   .rp-header__navinner {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 320px;
     align-items: center;
     gap: 20px;
   }
@@ -76,36 +80,71 @@
 
   .rp-header__menu ul {
     display: flex;
-    gap: 28px;
+    gap: 14px;
     list-style: none;
     padding: 0;
     margin: 0;
     align-items: center;
+    justify-content: center;
     flex-wrap: nowrap;
   }
 
   .rp-header__menu a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 12px;
     text-decoration: none;
     color: #111111;
-    font-size: 1.45rem;
+    font-size: 1.3rem;
     font-family: "Playfair Display", serif;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     white-space: nowrap;
+    transition: all 0.25s ease;
+  }
+
+  .rp-header__menu a::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 6px;
+    height: 1px;
+    background: #111111;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.25s ease;
+  }
+
+  .rp-header__menu a:hover::after {
+    transform: scaleX(1);
   }
 
   .rp-header__search {
     display: flex;
     justify-content: flex-end;
+    min-width: 0;
   }
 
   .rp-header__search form {
+    position: relative;
     width: 100%;
-    max-width: 300px;
-    height: 36px;
-    border: 1px solid #dddddd;
-    display: flex;
-    align-items: center;
+    max-width: 320px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 999px;
+    background: #f7f7f7;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+  }
+
+  .rp-header__search form:focus-within {
     background: #ffffff;
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.06);
   }
 
   .rp-header__search input {
@@ -113,15 +152,25 @@
     height: 100%;
     border: none;
     outline: none;
-    padding: 0 10px;
+    padding: 0 46px 0 14px;
     font-size: 1.3rem;
     font-family: "Playfair Display", serif;
     background: transparent;
+    color: #111111;
+    box-sizing: border-box;
+  }
+
+  .rp-header__search input::placeholder {
+    color: rgba(17, 17, 17, 0.55);
   }
 
   .rp-header__search button {
-    width: 40px;
-    height: 36px;
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -130,12 +179,14 @@
     justify-content: center;
     color: #111111;
     padding: 0;
+    margin: 0;
+    line-height: 0;
   }
 
-  .rp-header__search button .svg-wrapper,
   .rp-header__search button svg {
     width: 16px;
     height: 16px;
+    display: block;
   }
 
   .rp-mobile-header {
@@ -154,16 +205,25 @@
     }
 
     .rp-header__menu ul {
-      gap: 18px;
+      gap: 8px;
     }
 
     .rp-header__menu a {
-      font-size: 1.25rem;
+      font-size: 1.18rem;
+      padding: 0 10px;
     }
 
     .rp-header__navinner {
-      grid-template-columns: 1fr 260px;
-      gap: 14px;
+      grid-template-columns: 1fr 280px;
+      gap: 12px;
+    }
+
+    .rp-header__navbox {
+      margin: 0 16px;
+    }
+
+    .rp-header__search form {
+      max-width: 280px;
     }
   }
 
@@ -181,66 +241,23 @@
       gap: 10px;
     }
 
-    .rp-mobile-header__left,
-    .rp-mobile-header__right {
-      width: 44px;
-      min-width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 0 0 44px;
-      overflow: visible;
-    }
-
     .rp-mobile-header__center {
-      min-width: 0;
-      flex: 1 1 auto;
+      flex: 1;
       display: flex;
       justify-content: center;
-    }
-
-    .rp-mobile-header__brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
       min-width: 0;
-    }
-
-    .rp-mobile-header__brand img,
-    .rp-mobile-header__brand .header__heading-logo {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      display: block;
     }
 
     .rp-mobile-header__title {
       color: #ffffff;
       font-family: "Playfair Display", serif;
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 600;
-      line-height: 1;
       white-space: nowrap;
     }
 
-    .rp-mobile-header .header__icon,
-    .rp-mobile-header summary.header__icon,
-    .rp-mobile-header .modal__toggle {
-      color: #ffffff !important;
-    }
-
-    .rp-mobile-header details,
-    .rp-mobile-header summary {
-      display: flex;
-      align-items: center;
-    }
-
-    .rp-mobile-header .header__icon--search .svg-wrapper,
-    .rp-mobile-header .header__icon--search svg {
-      width: 22px;
-      height: 22px;
+    .rp-mobile-header__right {
+      display: none !important;
     }
   }
 </style>
@@ -267,20 +284,17 @@
             }}
           </span>
         {% endif %}
-
         <span class="rp-header__title">{{ shop.name }}</span>
       </a>
 
       <div class="rp-header__navbox">
         <div class="rp-header__navinner">
-
           <div class="rp-header__menu">
             <ul>
               <li><a href="{{ routes.root_url }}">Inicio</a></li>
               <li><a href="/collections/all">Catálogo</a></li>
-              <li><a href="/pages/promociones">Promociones</a></li>
+              <li><a href="/collections/promociones">Promociones</a></li>
               <li><a href="/pages/sobre-nosotros">Sobre nosotros</a></li>
-              <li><a href="/pages/contacto">Contacto</a></li>
             </ul>
           </div>
 
@@ -290,49 +304,29 @@
                 type="search"
                 name="q"
                 value="{{ search.terms | escape }}"
-                placeholder="Search in site"
+                placeholder="Buscar relojes, marcas y colecciones"
                 autocomplete="off"
               >
               <input type="hidden" name="options[prefix]" value="last">
-              <button type="submit" aria-label="{{ 'general.search.search' | t }}">
-                <span class="svg-wrapper">
-                  {{- 'icon-search.svg' | inline_asset_content -}}
-                </span>
+              <button type="submit" aria-label="Buscar en la tienda">
+                <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+                  <circle cx="8" cy="8" r="5.25" stroke="currentColor" stroke-width="1.5" />
+                  <path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
               </button>
             </form>
           </div>
-
         </div>
       </div>
     </div>
 
     <div class="rp-mobile-header">
-      <div class="rp-mobile-header__left">
+      <div>
         {% render 'header-drawer' %}
       </div>
 
       <div class="rp-mobile-header__center">
-        <a href="{{ routes.root_url }}" class="rp-mobile-header__brand">
-          {% if settings.logo != blank %}
-            {% assign logo_alt = settings.logo.alt | default: shop.name | escape %}
-            {% assign logo_height = settings.logo_width | divided_by: settings.logo.aspect_ratio %}
-            {{
-              settings.logo
-              | image_url: width: 200
-              | image_tag:
-                class: 'header__heading-logo motion-reduce',
-                widths: '100, 150, 200',
-                width: settings.logo_width,
-                height: logo_height,
-                alt: logo_alt
-            }}
-          {% endif %}
-          <span class="rp-mobile-header__title">{{ shop.name }}</span>
-        </a>
-      </div>
-
-      <div class="rp-mobile-header__right">
-        {% render 'header-search', input_id: 'Search-Mobile' %}
+        <span class="rp-mobile-header__title">{{ shop.name }}</span>
       </div>
     </div>
 
