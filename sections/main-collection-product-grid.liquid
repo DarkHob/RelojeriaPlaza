@@ -42,29 +42,6 @@
     }
   }
 
-  .collection-promociones-hero {
-    margin-bottom: 2.4rem;
-  }
-
-  .collection-promociones-hero__eyebrow {
-    display: inline-block;
-    margin: 0 0 0.8rem;
-    font-size: 1.2rem;
-    letter-spacing: 0.18rem;
-    text-transform: uppercase;
-    opacity: 0.7;
-  }
-
-  .collection-promociones-hero__title {
-    margin: 0;
-  }
-
-  .collection-promociones-hero__description {
-    margin: 1rem 0 0;
-    max-width: 72rem;
-    opacity: 0.82;
-  }
-
   .collection-promociones-grid {
     row-gap: 2.4rem;
   }
@@ -75,10 +52,6 @@
   }
 
   @media screen and (max-width: 749px) {
-    .collection-promociones-hero {
-      margin-bottom: 1.8rem;
-    }
-
     .collection-promociones-grid {
       row-gap: 1.8rem;
     }
@@ -306,20 +279,6 @@
           </div>
         {%- else -%}
           <div class="collection{% if section.settings.filter_type != 'vertical' or is_promotions_collection %} page-width{% endif %}">
-            {% if is_promotions_collection %}
-              <div class="collection-promociones-hero">
-                <span class="collection-promociones-hero__eyebrow">Promociones</span>
-                <h1 class="title title--primary collection-promociones-hero__title">
-                  {{ collection.title }}
-                </h1>
-                {% if collection.description != blank %}
-                  <div class="collection-promociones-hero__description rte">
-                    {{ collection.description }}
-                  </div>
-                {% endif %}
-              </div>
-            {% endif %}
-
             <div class="loading-overlay gradient"></div>
 
             <ul

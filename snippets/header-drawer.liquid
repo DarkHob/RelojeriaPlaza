@@ -41,9 +41,7 @@
             <li class="rp-drawer-menu__item">
               <a href="/pages/sobre-nosotros" class="rp-drawer-menu__link">Sobre nosotros</a>
             </li>
-            <li class="rp-drawer-menu__item">
-              <a href="/pages/contacto" class="rp-drawer-menu__link">Contacto</a>
-            </li>
+             
           </ul>
         </nav>
       </div>
@@ -62,6 +60,30 @@
   .rp-mobile-drawer .menu-drawer-container {
     margin: 0;
     padding: 0;
+  }
+
+  body.overflow-hidden-tablet {
+    overflow: hidden !important;
+    touch-action: none;
+    overscroll-behavior: none;
+  }
+
+  html:has(body.overflow-hidden-tablet) {
+    overflow: hidden !important;
+    overscroll-behavior: none;
+  }
+
+   
+  .rp-mobile-drawer summary::before,
+  .rp-mobile-drawer details > summary::before,
+  .rp-mobile-drawer details[open] > summary::before,
+  .rp-mobile-drawer details[open]:not(.menu-opening) > summary::before {
+    display: none !important;
+    content: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    background: transparent !important;
   }
 
   .rp-mobile-drawer .rp-drawer-toggle {
@@ -310,3 +332,77 @@
     }
   }
 </style>
+<script>
+  (function () {
+    const details = document.getElementById('Details-menu-drawer-container');
+    const drawerPanel = document.getElementById('menu-drawer');
+    const drawerSummary = details ? details.querySelector('summary') : null;
+
+    if (!details || !drawerPanel || !drawerSummary) return;
+
+    let scrollTop = 0;
+
+   
+    function lockBody() {
+      scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollTop}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+
+      document.body.classList.add('overflow-hidden-tablet');
+    }
+
+     
+    function unlockBody() {
+      const savedTop = document.body.style.top;
+
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+
+      document.body.classList.remove('overflow-hidden-tablet');
+
+      window.scrollTo(0, Math.abs(parseInt(savedTop || '0', 10)));
+    }
+
+  
+    function closeDrawer() {
+      details.removeAttribute('open');
+      details.classList.remove('menu-opening');
+      unlockBody();
+    }
+
+     
+    details.addEventListener('toggle', function () {
+      if (details.open) {
+        lockBody();
+      } else {
+        unlockBody();
+      }
+    });
+
+    
+    document.addEventListener('click', function (event) {
+      if (!details.hasAttribute('open')) return;
+
+      const clickedInsideDrawer = drawerPanel.contains(event.target);
+      const clickedToggle = drawerSummary.contains(event.target);
+
+      if (!clickedInsideDrawer && !clickedToggle) {
+        closeDrawer();
+      }
+    });
+
+  
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && details.hasAttribute('open')) {
+        closeDrawer();
+      }
+    });
+  })();
+</script>

@@ -1,6 +1,85 @@
 {% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
 {{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
 
+{% if collection.handle == 'promociones' %}
+
+<!-- SOLO PROMOCIONES -->
+<div class="collection-hero gradient">
+  <div class="hero-custom promo-clean">
+    <div class="collection-hero__inner page-width">
+      <div class="custom-banner">
+        <div class="custom-banner__text">
+
+          <h1 class="promo-title">
+            {{ collection.title | upcase }}
+          </h1>
+
+          <p class="promo-subtitle">
+            Relojes con la mejor calidad del mercado
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.promo-clean {
+  background: #f6f6f6;
+  justify-content: center;
+  padding: 50px 20px;
+}
+
+.promo-clean .custom-banner {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+}
+
+.promo-clean .custom-banner__text {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* MISMA BASE VISUAL DEL MENÚ */
+.promo-title {
+  font-family: inherit;
+  font-size: 64px;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #b07a2a;
+  margin: 0 0 12px;
+  letter-spacing: 0.08em;
+  text-align: center;
+  line-height: 1;
+}
+
+.promo-subtitle {
+  font-family: inherit;
+  font-size: 28px;
+  color: #111111;
+  margin: 0;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.25;
+}
+
+@media screen and (max-width: 749px) {
+  .promo-title {
+    font-size: 34px;
+  }
+
+  .promo-subtitle {
+    font-size: 18px;
+  }
+}
+</style>
+
+{% else %}
+
+<!-- RESTO DEL SITIO -->
 <div class="collection-hero color-{{ section.settings.color_scheme }} gradient">
   <div class="hero-custom">
     
@@ -11,15 +90,21 @@
           <div class="custom-banner__breadcrumb">
             <span class="crumb"><a href="/">Inicio</a></span>
             <span class="separator">/</span>
-            <span class="crumb"><a href="/collections/all">Catalogo</a></span>
-            <span class="separator">/</span>
+
+            {% if collection.handle == 'all' %}
+              <span class="crumb active">Catálogo</span>
+            {% else %}
+              <span class="crumb"><a href="/collections/all">Catálogo</a></span>
+            {% endif %}
+
             {% unless collection.handle == 'all' %}
+              <span class="separator">/</span>
               <span class="crumb active">{{ collection.title }}</span>
             {% endunless %}
           </div>
     
           <p class="custom-banner__subtitle">
-            relojes con la mejor calidad del mercado
+            Relojes con la mejor calidad del mercado
           </p>
           
         </div>
@@ -52,10 +137,9 @@
 </div>
 
 <style>
-/* ===== FONDO GENERAL ===== */
 .hero-custom {
   width: 100%;
-  min-height: 198px; /* Altura suficiente para que el reloj no se vea apretado */
+  min-height: 198px;
   background:
     radial-gradient(circle at 75% 50%, rgba(255,255,255,0.08), transparent 60%),
     linear-gradient(
@@ -70,14 +154,13 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 0px 5%
+  padding: 0px 5%;
 }
 
 .collection-hero__inner {
   width: 100%;
 }
 
-/* ===== TEXTO Y CONTENEDOR ===== */
 .custom-banner {
   display: flex;
   align-items: center;
@@ -86,7 +169,7 @@
 }
 
 .custom-banner__text {
-  max-width: 550px; /* Aumentado para que el texto no se rompa en tantas líneas */
+  max-width: 550px;
   padding: 20px 0;
 }
 
@@ -97,14 +180,12 @@
   margin-bottom: 8px;
 }
 
-.custom-banner__breadcrumb a, 
+.custom-banner__breadcrumb a,
 .separator {
   text-decoration: none;
   color: #333;
   font-size: 18px;
 }
-
-
 
 .crumb.active {
   font-size: 32px;
@@ -121,7 +202,6 @@
   font-weight: 400;
 }
 
-/* ===== IMAGEN DEL RELOJ (DERECHA) ===== */
 .hero-custom__image {
   position: absolute;
   right: 3%;
@@ -134,78 +214,10 @@
 }
 
 .hero-custom__image img {
-  width: 250px;  /* 🔥 tamaño fijo igual para ambos */
+  width: 250px;
   object-fit: contain;
   filter: drop-shadow(-15px 10px 25px rgba(0,0,0,0.5));
 }
-
-/* ===== RESPONSIVE ===== */
-
-/* TABLET / PANTALLAS MEDIANAS */
-@media screen and (max-width: 990px) {
-  .hero-custom {
-    flex-direction: column;
-    padding: 40px 0;
-    min-height: auto;
-    background: #f1f1f1;
-     gap:8px;
-  }
-
-  .custom-banner__text {
-    max-width: 100%;
-    text-align: center;
-    padding: 0 20px;
-  }
-
-  .custom-banner__breadcrumb {
-    justify-content: center;
-  }
-
-  /* Bajamos el z-index para que no tape los menús de Shopify */
-  .hero-custom__image {
-    position: relative;
-    width: 50%;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin: 20px auto 0;
-    z-index: 1; 
-  }
-  .hero-custom__image img {
-    width: 140px;
-  }
-}
-
-/* MÓVILES (Android/iOS) */
-@media screen and (max-width: 480px) {
-  .hero-custom {
-    /* Degradado vertical para móvil */
-    background: linear-gradient(180deg, #f1f1f1 55%, #000000 100%);
-    padding: 30px 0;
-    gap: 8px;
-  }
-
-  .custom-banner__subtitle { 
-    font-size: 20px; 
-  }
-
-  .crumb.active { 
-    font-size: 24px; 
-  }
-
-  .hero-custom__image { 
-    width: 70%; 
-    z-index: 1; /* Valor bajo para que el menú pase por encima */
-  }
-
-  .hero-custom__image img {
-    width: 140px;
-  }
-  
-  /* TRUCO EXTRA: Si el menú de Shopify se abre, ocultamos el reloj 
-     para que no estorbe la lectura del catálogo */
-  .menu-opening .hero-custom__image {
-    display: none;
-  }
-}
 </style>
+
+{% endif %}

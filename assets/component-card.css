@@ -816,4 +816,55 @@
     font-size: 1.6rem;
   }
 }
+/* =========================================================
+   AGREGADO NUEVO - PROMOCIONES / DESCUENTO MANUAL
+   NO REEMPLAZA NADA, SOLO REFUERZA LO EXISTENTE
+========================================================= */
+
+.rp-card__badge {
+  border-radius: 999px;
+  line-height: 1;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.18);
+}
+
+.rp-card__price {
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.rp-price-old {
+  opacity: 0.82;
+  line-height: 1.2;
+}
+
+.rp-price-new {
+  line-height: 1;
+}
+
+.rp-price-normal {
+  line-height: 1;
+}
+
+.rp-card__title a:hover {
+  text-decoration: none;
+}
+
+.rp-card__media img {
+  transition: transform 0.35s ease;
+}
+
+.rp-card:hover .rp-card__media img {
+  transform: scale(1.03);
+}
+
+@media screen and (max-width: 749px) {
+  .rp-card__badge {
+    border-radius: 999px;
+    line-height: 1;
+  }
+
+  .rp-card__price {
+    align-items: baseline;
+  }
+}
 }

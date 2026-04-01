@@ -32,7 +32,7 @@
 
       <div class="product-form__buttons">
         {%- assign current_variant = product.selected_or_first_available_variant -%}
-        {%- assign whatsapp_number = '59160750534' -%}
+        {%- assign whatsapp_number = settings.phone | remove: '+' | remove: ' ' | remove: '-' -%}
 
         <div
           class="product-whatsapp-box"

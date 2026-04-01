@@ -5,30 +5,36 @@
 .js menu-drawer > details > summary::before,
 .js menu-drawer > details[open]:not(.menu-opening) > summary::before {
   content: '';
-  position: absolute;
+  position: fixed;
+  inset: 0;
   cursor: default;
-  width: 100%;
-  height: calc(100vh - 100%);
-  height: calc(var(--viewport-height, 100vh) - (var(--header-bottom-position, 100%)));
-  top: 100%;
-  left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(var(--color-foreground), 0.5);
   opacity: 0;
   visibility: hidden;
   z-index: 2;
-  transition: opacity 0s, visibility 0s;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
+ 
 menu-drawer > details[open] > summary::before {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity var(--duration-default) ease, visibility var(--duration-default) ease;
+  display: none !important;
+  content: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .menu-drawer {
   position: absolute;
   transform: translateX(-100%);
   visibility: hidden;
+  opacity: 0;
+  transition:
+    transform 0.32s ease,
+    opacity 0.22s ease,
+    visibility 0.32s ease !important;
   z-index: 3;
   left: 0;
   top: 100%;
@@ -49,13 +55,22 @@ menu-drawer > details[open] > summary::before {
 
 .js details[open] > .menu-drawer,
 .js details[open] > .menu-drawer__submenu {
-  transition: transform var(--duration-default) ease, visibility var(--duration-default) ease;
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1)
+    opacity 0.25s ease,
+    visibility 0.35s ease;
 }
 
 .js details[open].menu-opening > .menu-drawer,
+.js details[open] > .menu-drawer,
 details[open].menu-opening > .menu-drawer__submenu {
   transform: translateX(0);
   visibility: visible;
+}
+
+.js details[open].menu-opening > .menu-drawer,
+.js details[open] > .menu-drawer {
+  opacity: 1;
 }
 
 .js .menu-drawer__navigation .submenu-open {
@@ -352,14 +367,14 @@ details[open].menu-opening > .menu-drawer__submenu {
   z-index: 20 !important;
 }
 
-/* ocultar el buscador del header superior en móvil */
+ 
 @media screen and (max-width: 989px) {
   .header-wrapper .header__search:not(.menu-drawer__search-wrapper .header__search):not(.rp-drawer-search .header__search) {
     display: none !important;
   }
 }
 
-/* ocultar buscador interno del drawer en desktop */
+ 
 @media screen and (min-width: 990px) {
   .menu-drawer__search-wrapper,
   .rp-drawer-search {
@@ -375,3 +390,34 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 }
 
+ 
+
+.rp-drawer-toggle .rp-toggle-icon {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.menu-drawer-container[open] .rp-toggle-icon--hamburger {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.8);
+}
+
+.menu-drawer-container[open] .rp-toggle-icon--close {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.rp-toggle-icon--close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.8);
+}
+
+ 
+.js menu-drawer > details > summary::before,
+.js menu-drawer > details[open]:not(.menu-opening) > summary::before,
+menu-drawer > details[open] > summary::before {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  content: none !important;
+}

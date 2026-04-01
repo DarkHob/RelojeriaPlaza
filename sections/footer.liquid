@@ -9,25 +9,21 @@
         <div class="custom-footer__brand">
           {% if section.settings.footer_logo != blank %}
             <img
-              src="{{ section.settings.footer_logo | image_url: width: 120 }}"
+              src="{{ section.settings.footer_logo | image_url: width: 400 }}"
               alt="{{ shop.name }}"
               class="custom-footer__logo"
               loading="lazy"
-              width="60"
-              height="60"
+              width="220"
+              height="auto"
             >
           {% endif %}
+        </div>
 
-          <div class="custom-footer__brand-text">
-            <h2 class="custom-footer__title">
-              {{ section.settings.brand_title }}
-            </h2>
+        {% if section.settings.brand_description != blank %}
+          <div class="custom-footer__description">
+            {{ section.settings.brand_description }}
           </div>
-        </div>
-
-        <div class="custom-footer__description">
-          {{ section.settings.brand_description }}
-        </div>
+        {% endif %}
       </div>
 
       <div class="custom-footer__col custom-footer__col--links">
@@ -49,67 +45,83 @@
       <div class="custom-footer__col custom-footer__col--contact">
         <h3 class="custom-footer__heading">{{ section.settings.contact_heading }}</h3>
 
-        {% if section.settings.phone != blank %}
-          <div class="custom-footer__phone">
-            <span class="custom-footer__icon custom-footer__icon--phone">
-              {{ 'icon-phone-custom.svg' | inline_asset_content }}
-            </span>
-            <a href="tel:{{ section.settings.phone | replace: ' ', '' }}" class="custom-footer__link">
-              {{ section.settings.phone }}
-            </a>
-          </div>
-        {% endif %}
+          {% if settings.phone != blank %}
+            <div class="custom-footer__phone">
+              <span class="custom-footer__icon custom-footer__icon--phone">
+                {{ 'icon-phone-custom.svg' | inline_asset_content }}
+              </span>
+              <a href="tel:{{ settings.phone | replace: ' ', '' }}" class="custom-footer__link">
+                {{ settings.phone }}
+              </a>
+            </div>
+          {% endif %}
+
+         {% if section.settings.address != blank %}
+            <div class="custom-footer__address">
+              <span class="custom-footer__icon custom-footer__icon--address">
+                {{ 'pinMapa.svg' | inline_asset_content }}
+              </span>
+
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query={{ section.settings.address | url_encode }}" 
+                target="_blank"
+                class="custom-footer__link"
+              >
+                {{ section.settings.address }}
+              </a>
+            </div>
+          {% endif %}
 
         <div class="custom-footer__social">
-            {% if settings.social_instagram_link != blank %}
-              <a
-                href="{{ settings.social_instagram_link }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                class="custom-footer__social-link"
-              >
-                <span class="custom-footer__social-icon">
-                  {{ 'icon-instagram-custom.svg' | inline_asset_content }}
-                </span>
-              </a>
-            {% endif %}
+          {% if settings.social_instagram_link != blank %}
+            <a
+              href="{{ settings.social_instagram_link }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              class="custom-footer__social-link"
+            >
+              <span class="custom-footer__social-icon">
+                {{ 'icon-instagram-custom.svg' | inline_asset_content }}
+              </span>
+            </a>
+          {% endif %}
 
-            {% if settings.social_tiktok_link != blank %}
-              <a
-                href="{{ settings.social_tiktok_link }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-                class="custom-footer__social-link"
-              >
-                <span class="custom-footer__social-icon">
-                  {{ 'icon-tiktok-custom.svg' | inline_asset_content }}
-                </span>
-              </a>
-            {% endif %}
+          {% if settings.social_tiktok_link != blank %}
+            <a
+              href="{{ settings.social_tiktok_link }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+              class="custom-footer__social-link"
+            >
+              <span class="custom-footer__social-icon">
+                {{ 'icon-tiktok-custom.svg' | inline_asset_content }}
+              </span>
+            </a>
+          {% endif %}
 
-            {% if settings.social_facebook_link != blank %}
-              <a
-                href="{{ settings.social_facebook_link }}"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                class="custom-footer__social-link"
-              >
-                <span class="custom-footer__social-icon">
-                  {{ 'icon-facebook-custom.svg' | inline_asset_content }}
-                </span>
-              </a>
-            {% endif %}
-          </div>
+          {% if settings.social_facebook_link != blank %}
+            <a
+              href="{{ settings.social_facebook_link }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              class="custom-footer__social-link"
+            >
+              <span class="custom-footer__social-icon">
+                {{ 'icon-facebook-custom.svg' | inline_asset_content }}
+              </span>
+            </a>
+          {% endif %}
+        </div>
       </div>
 
     </div>
 
     <div class="custom-footer__bottom">
       <p class="custom-footer__copyright">
-        {{ 'now' | date: '%Y' }} {{ shop.name }}. Todos los derechos reservados
+        {{ 'now' | date: '%Y' }}. © All rights reserved. Designed by FreelDev
       </p>
     </div>
   </div>
@@ -131,12 +143,6 @@
       "type": "image_picker",
       "id": "footer_logo",
       "label": "Logo del footer"
-    },
-    {
-      "type": "text",
-      "id": "brand_title",
-      "label": "Título marca",
-      "default": "Relojes Plaza"
     },
     {
       "type": "textarea",
@@ -166,6 +172,12 @@
       "id": "phone",
       "label": "Teléfono",
       "default": "+591 12345678"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Dirección",
+      "default": "Av. Ejemplo #123, Santa Cruz, Bolivia"
     }
   ],
   "presets": [

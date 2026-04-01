@@ -15,7 +15,11 @@
           CATÁLOGO
         </a>
 
-        <a href="/pages/contact" class="hero-btn hero-btn--light">
+        <a 
+          href="https://wa.me/{{ settings.phone | remove: '+' | remove: ' ' }}" 
+          class="hero-btn hero-btn--light"
+          target="_blank"
+        >
           CONTACTANOS
         </a>
       </div>

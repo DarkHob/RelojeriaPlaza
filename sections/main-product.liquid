@@ -192,9 +192,37 @@
                   {%- endif -%}
                 </p>
               {%- when 'description' -%}
-                {%- if product.description != blank -%}
+                {%- liquid
+                  assign quality_value = blank
+
+                  for collection_item in product.collections
+                    if collection_item.handle == 'doble-a'
+                      assign quality_value = 'Doble A'
+                      break
+                    elsif collection_item.handle == 'triple-a'
+                      assign quality_value = 'Triple A'
+                      break
+                    elsif collection_item.handle == 'originales'
+                      assign quality_value = 'Original'
+                      break
+                    elsif collection_item.handle == 'doble-a-premium'
+                      assign quality_value = 'Doble A Premium'
+                      break
+                    endif
+                  endfor
+                -%}
+
+                {%- if product.description != blank or quality_value != blank -%}
                   <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                    {{ product.description }}
+                    {%- if quality_value != blank -%}
+                      <p class="product__quality-inline">
+                        <strong>Calidad:</strong> {{ quality_value }}
+                      </p>
+                    {%- endif -%}
+
+                    {%- if product.description != blank -%}
+                      {{ product.description }}
+                    {%- endif -%}
                   </div>
                 {%- endif -%}
               {%- when 'sku' -%}

@@ -1,119 +1,72 @@
 {% comment %}
-  Buscador responsive reutilizable
-  - Desktop: render normal en header
-  - Mobile drawer: render dentro del menú hamburguesa
+  Renders a header search component
+
+  Accepts:
+  - input_id: {String} Id for the search input
+
+  Usage:
+  {% render 'header-search', input_id: 'Search-In-Modal' %}
 {% endcomment %}
 
-{%- liquid
-  assign is_drawer_search = false
-
-  if input_id contains 'Drawer'
-    assign is_drawer_search = true
-  endif
--%}
-
-{%- assign placeholder_text = "Buscar relojes, marcas y colecciones" -%}
-
 {%- if settings.predictive_search_enabled -%}
-  <predictive-search
-    class="header__search header-search-main{% if is_drawer_search %} header-search-main--drawer{% else %} header-search-main--desktop{% endif %}"
-    data-loading-text="{{ 'accessibility.loading' | t }}"
-  >
-    <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-      <div class="field">
-        <input
-          class="search__input field__input"
-          id="{{ input_id | default: 'Search-Inline' }}"
-          type="search"
-          name="q"
-          value="{{ search.terms | escape }}"
-          placeholder="{{ placeholder_text }}"
+  <predictive-search class="header__search" data-loading-text="{{ 'accessibility.loading' | t }}">
+{%- else -%}
+  <search-form class="header__search">
+{%- endif -%}
+
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+    <div class="field">
+      <input
+        class="search__input field__input"
+        id="{{ input_id }}"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="Buscar relojes, marcas y colecciones"
+        {%- if settings.predictive_search_enabled -%}
           role="combobox"
           aria-expanded="false"
-          aria-owns="predictive-search-results-{{ input_id | default: 'Search-Inline' | handle }}"
-          aria-controls="predictive-search-results-{{ input_id | default: 'Search-Inline' | handle }}"
+          aria-owns="predictive-search-results"
+          aria-controls="predictive-search-results"
           aria-haspopup="listbox"
           aria-autocomplete="list"
           autocorrect="off"
           autocomplete="off"
           autocapitalize="off"
           spellcheck="false"
-        >
-
-        <label class="field__label visually-hidden" for="{{ input_id | default: 'Search-Inline' }}">
-          {{ placeholder_text }}
-        </label>
-
-        <input type="hidden" name="options[prefix]" value="last">
-
-        <button
-          type="submit"
-          class="search__button field__button"
-          aria-label="{{ 'general.search.search' | t }}"
-        >
-          <span class="svg-wrapper">
-            {{- 'icon-search.svg' | inline_asset_content -}}
-          </span>
-        </button>
-      </div>
-
-      <div
-        id="predictive-search-results-{{ input_id | default: 'Search-Inline' | handle }}"
-        class="predictive-search predictive-search--header{% if is_drawer_search %} predictive-search--drawer{% endif %}"
-        tabindex="-1"
-        data-predictive-search
+        {%- endif -%}
       >
-        <div class="predictive-search__loading-state">
-          <svg
-            aria-hidden="true"
-            focusable="false"
-            class="spinner"
-            viewBox="0 0 66 66"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
-          </svg>
-        </div>
+      <label class="field__label" for="{{ input_id }}">Buscar relojes, marcas y colecciones</label>
+      <input type="hidden" name="options[prefix]" value="last">
+
+      <button
+        type="reset"
+        class="reset__button field__button hidden"
+        aria-label="{{ 'general.search.reset' | t }}"
+      >
+        <span class="svg-wrapper">
+          {{- 'icon-reset.svg' | inline_asset_content -}}
+        </span>
+      </button>
+
+      <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+        <span class="svg-wrapper">
+          {{- 'icon-search.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    </div>
+
+    {%- if settings.predictive_search_enabled -%}
+      <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+        {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
       </div>
 
       <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
-    </form>
+    {%- endif -%}
+  </form>
+
+{%- if settings.predictive_search_enabled -%}
   </predictive-search>
 {%- else -%}
-  <search-form
-    class="header__search header-search-main{% if is_drawer_search %} header-search-main--drawer{% else %} header-search-main--desktop{% endif %}"
-  >
-    <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-      <div class="field">
-        <input
-          class="search__input field__input"
-          id="{{ input_id | default: 'Search-Inline' }}"
-          type="search"
-          name="q"
-          value="{{ search.terms | escape }}"
-          placeholder="{{ placeholder_text }}"
-          autocorrect="off"
-          autocomplete="off"
-          autocapitalize="off"
-          spellcheck="false"
-        >
-
-        <label class="field__label visually-hidden" for="{{ input_id | default: 'Search-Inline' }}">
-          {{ placeholder_text }}
-        </label>
-
-        <input type="hidden" name="options[prefix]" value="last">
-
-        <button
-          type="submit"
-          class="search__button field__button"
-          aria-label="{{ 'general.search.search' | t }}"
-        >
-          <span class="svg-wrapper">
-            {{- 'icon-search.svg' | inline_asset_content -}}
-          </span>
-        </button>
-      </div>
-    </form>
   </search-form>
 {%- endif -%}

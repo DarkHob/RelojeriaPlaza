@@ -1,7 +1,7 @@
 {% comment %}
   Renders a list of product's price (regular, sale)
 
-  Accepts:
+  Acepta:
   - product: {Object} Product Liquid object (optional)
   - placeholder: {Boolean} Renders a placeholder price (optional)
   - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
@@ -9,8 +9,8 @@
   - price_class: {String} Adds a price class to the price element (optional)
   - show_compare_at_price: {Boolean} Renders the compare at price if the product matches the condition (optional)
 
-  Usage:
-  {% render 'price', product: product %}
+  Extra agregado:
+  - Usa metafield custom.discount_percentage si existe
 {% endcomment %}
 
 {%- liquid
@@ -44,9 +44,21 @@
     assign money_price = 'products.product.price.from_price_html' | t: price: money_price
   endif
 
+  assign discount_percentage = 0
+  if product.metafields.custom.discount_percentage != blank
+    assign discount_percentage = product.metafields.custom.discount_percentage.value | default: product.metafields.custom.discount_percentage | plus: 0
+  endif
+
   assign is_on_sale = false
   if compare_at_price > price and product.quantity_price_breaks_configured? != true
     assign is_on_sale = true
+  endif
+
+  assign badge_discount = 0
+  if discount_percentage > 0
+    assign badge_discount = discount_percentage
+  elsif compare_at_price > price and compare_at_price > 0
+    assign badge_discount = compare_at_price | minus: price | times: 100.0 | divided_by: compare_at_price | round
   endif
 -%}
 
@@ -128,9 +140,15 @@
     </div>
 
     {%- if show_badges -%}
-      <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
-        {{ 'products.product.on_sale' | t }}
-      </span>
+      {%- if is_on_sale -%}
+        <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
+          {%- if badge_discount > 0 -%}
+            -{{ badge_discount }}%
+          {%- else -%}
+            {{ 'products.product.on_sale' | t }}
+          {%- endif -%}
+        </span>
+      {%- endif -%}
 
       <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
         {{ 'products.product.sold_out' | t }}

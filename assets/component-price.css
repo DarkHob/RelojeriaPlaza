@@ -74,9 +74,11 @@
 }
 
 .price--on-sale .price__sale {
-  display: initial;
+  display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
 }
 
 .price--center {
@@ -86,8 +88,36 @@
 
 .price--on-sale .price-item--regular {
   text-decoration: line-through;
-  color: rgba(var(--color-foreground), 0.75);
+  color: rgba(var(--color-foreground), 0.6);
   font-size: 1.3rem;
+}
+
+.price-item--sale {
+  color: #e60000;
+  font-weight: 700;
+}
+
+.price__old-wrap {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.price-item--old {
+  opacity: 0.72;
+}
+
+.price__badge-sale,
+.price__badge-sold-out {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.7rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
 }
 
 .unit-price {
@@ -98,6 +128,7 @@
   margin-top: 0.2rem;
   color: rgba(var(--color-foreground), 0.7);
 }
+
 /* =========================================================
    RELOJES PLAZA - AJUSTES DE PRECIO PARA PROMOCIONES
 ========================================================= */
@@ -133,21 +164,25 @@
 
 .rp-card .price-item--regular,
 .rp-card .price__regular .price-item--regular,
-.rp-card .price--on-sale .price-item--regular {
+.rp-card .price--on-sale .price-item--regular,
+.rp-price-old {
   color: #888888;
   font-size: 1.2rem;
   text-decoration: line-through;
+  line-height: 1.2;
 }
 
 .rp-card .price-item--sale,
-.rp-card .price-item--last {
+.rp-card .price-item--last,
+.rp-price-new {
   color: #e60000;
   font-size: 2rem;
   font-weight: 700;
   line-height: 1;
 }
 
-.rp-card .price__regular .price-item--last {
+.rp-card .price__regular .price-item--last,
+.rp-price-normal {
   color: #111111;
   font-size: 2rem;
   font-weight: 700;
@@ -159,16 +194,99 @@
   display: none !important;
 }
 
+/* =========================================================
+   BADGE DE OFERTA EN LA CARD PERSONALIZADA
+========================================================= */
+
+.rp-card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: #e60000;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  box-shadow: 0 0.4rem 1.2rem rgba(0, 0, 0, 0.18);
+}
+
+/* =========================================================
+   BLOQUE DE PRECIO DE TU CARD PERSONALIZADA
+========================================================= */
+
+.rp-card__price {
+  margin-top: 0.2rem;
+  min-height: 2.4rem;
+}
+
+.rp-price-old {
+  opacity: 0.8;
+}
+
+.rp-price-new,
+.rp-price-normal {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* =========================================================
+   MEJORAS GENERALES CUANDO EL SNIPPET PRICE SE USE DENTRO
+   DE TARJETAS O PRODUCTOS
+========================================================= */
+
+.price__container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+}
+
+.price__regular,
+.price__sale {
+  margin: 0;
+}
+
+.price__sale .price-item--sale {
+  margin-right: 0;
+}
+
+.price__regular .price-item--last {
+  margin-right: 0;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media screen and (max-width: 749px) {
   .rp-card .price-item--sale,
   .rp-card .price-item--last,
-  .rp-card .price__regular .price-item--last {
+  .rp-card .price__regular .price-item--last,
+  .rp-price-new,
+  .rp-price-normal {
     font-size: 1.7rem;
   }
 
   .rp-card .price-item--regular,
   .rp-card .price__regular .price-item--regular,
-  .rp-card .price--on-sale .price-item--regular {
+  .rp-card .price--on-sale .price-item--regular,
+  .rp-price-old {
     font-size: 1.1rem;
+  }
+
+  .rp-card__badge {
+    top: 0.8rem;
+    right: 0.8rem;
+    min-height: 2.7rem;
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
   }
 }

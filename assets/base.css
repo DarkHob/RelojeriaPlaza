@@ -3600,6 +3600,7 @@ details-disclosure > details {
 /* DarkHob*\
 
 /* --- Estilos para el banner --- */
+/* --- Estilos para el banner --- */
 
 .hero-custom{
   background:
@@ -3625,6 +3626,8 @@ details-disclosure > details {
 
 .hero-custom__content{
   max-width:550px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-custom__title{
@@ -3661,19 +3664,73 @@ details-disclosure > details {
   position: absolute;
   right: 100px;
   bottom: -100px;
-  z-index: 2;
+  z-index: 1;
   display: flex;
   align-items: flex-end;
+  pointer-events: none;
 }
 
 .hero-custom__image img{
   width: 700px;
   height: auto;
   display: block;
+  transform-origin: bottom right;
   filter: drop-shadow(0 50px 80px rgba(0,0,0,0.85))
           drop-shadow(0 15px 35px rgba(0,0,0,0.7));
 }
 
+
+ 
+
+/* TABLET GRANDE / LAPTOP PEQUEÑA */
+@media screen and (max-width: 1199px) {
+  .hero-custom__image {
+    right: 40px;
+    bottom: -70px;
+  }
+
+  .hero-custom__image img{
+    transform: scale(0.9);
+  }
+}
+
+/* TABLET */
+@media screen and (max-width: 910px) {
+  .hero-custom {
+    background-image: linear-gradient(
+      120deg,
+      #f1f1f1 0%,
+      #f1f1f1 63%,
+      #e2e2e2 63%,
+      #d6d6d6 100%
+    ) !important;
+    background-color: #f1f1f1 !important;
+  }
+
+  .hero-custom__title {
+    font-size: 58px;
+  }
+
+  .hero-custom__subtitle {
+    font-size: 18px;
+  }
+
+  .hero-custom__image {
+    right: -10px;
+    bottom: -30px;
+  }
+
+  .hero-custom__image img{
+    transform: scale(0.68);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-custom__image {
+    display: none;
+  }
+}
+/* MOBILE */
 @media screen and (max-width: 749px) {
   .hero-custom {
     background: #f1f1f1;
@@ -3692,25 +3749,25 @@ details-disclosure > details {
   .hero-custom__content {
     max-width: 100%;
     width: 100%;
-    padding: 0 20px;
+    padding: 0 20px 0 28px;
     position: relative;
     z-index: 2;
   }
 
   .hero-custom__title {
-    font-size: 4.8rem;
+    font-size: clamp(4rem, 11vw, 4.8rem);
     line-height: 0.95;
     margin: 0 0 18px;
     max-width: 260px;
   }
 
   .hero-custom__subtitle {
-    font-size: 1.9rem;
+    font-size: clamp(1.6rem, 4.2vw, 1.9rem);
     line-height: 1.4;
     margin-bottom: 22px;
-    max-width: 260px;
+    max-width: 230px;
   }
-
+  
   .hero-custom__buttons {
     display: flex;
     flex-direction: column;
@@ -3723,24 +3780,82 @@ details-disclosure > details {
     width: 100%;
     text-align: center;
     padding: 14px 18px;
+    margin-right: 0;
   }
 
   .hero-custom__image {
-    position: absolute;
-    right: -60px;
-    top: 50px;
-    bottom: auto;
-    z-index: 1;
+    right: 35px;
+    bottom: 0;
   }
-
   .hero-custom__image img {
-    width: 400px;
-    height: auto;
-    display: block;
-    opacity: 0.95;
+    transform: scale(0.5);
   }
 }
 
+/* MÓVILES MUY PEQUEÑOS: iPhone SE, Fold cerrado, etc. */
+@media screen and (max-width: 545px) {
+
+  .hero-custom {
+    background-image: linear-gradient(
+      120deg,
+      #f1f1f1 0%,
+      #f1f1f1 63%,
+      #e2e2e2 63%,
+      #d6d6d6 100%
+    ) !important;
+    background-color: #f1f1f1 !important;
+  }
+
+  .hero-custom__image {
+    display: none !important;
+  }
+
+  .hero-custom__container {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-custom__content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-custom__title {
+    max-width: none;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-custom__subtitle {
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .hero-custom__buttons {
+    width: 100%;
+    max-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+
+  .hero-btn {
+    margin-right: 0;
+  }
+
+  .hero-custom {
+    background-image: none;
+    background-color: #f1f1f1;
+  }
+}
 /* Nivek*\
 
 /* --- Estilos para la Cuadrícula Asimétrica 4 --- */
