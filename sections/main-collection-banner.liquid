@@ -43,7 +43,6 @@
   margin: 0 auto;
 }
 
-/* MISMA BASE VISUAL DEL MENÚ */
 .promo-title {
   font-family: inherit;
   font-size: 64px;
@@ -112,11 +111,10 @@
     </div>
 
     <div class="hero-custom__image">
-
       <img
         class="watch-small"
         src="{{ 'icon-reloj2.png' | asset_url }}"
-        alt="Reloj pequeño"
+        alt="Reloj azul"
         width="800"
         height="800"
         loading="lazy"
@@ -125,14 +123,12 @@
       <img
         class="watch-big"
         src="{{ 'icon-reloj.svg' | asset_url }}"
-        alt="Reloj grande"
+        alt="Reloj negro"
         width="800"
         height="800"
         loading="lazy"
       >
-
     </div>
-
   </div>
 </div>
 
@@ -154,7 +150,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 0px 5%;
+  padding: 0 5%;
 }
 
 .collection-hero__inner {
@@ -181,17 +177,18 @@
 }
 
 .custom-banner__breadcrumb a,
-.separator {
+.custom-banner__breadcrumb .separator {
   text-decoration: none;
   color: #333;
   font-size: 18px;
 }
 
-.crumb.active {
+.custom-banner__breadcrumb .crumb.active {
   font-size: 32px;
   font-weight: 700;
   color: #000;
   margin-left: 5px;
+  white-space: nowrap;
 }
 
 .custom-banner__subtitle {
@@ -202,21 +199,165 @@
   font-weight: 400;
 }
 
+/* CONTENEDOR DE RELOJES */
 .hero-custom__image {
   position: absolute;
   right: 3%;
-  top: 60%;
+  top: 50%;
   transform: translateY(-50%);
   display: flex;
   align-items: center;
-  gap: 0px;
+  justify-content: center;
+  gap: 0;
   z-index: 5;
+  overflow: visible;
 }
 
+/* BASE IMÁGENES */
 .hero-custom__image img {
   width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+  height: auto;
   object-fit: contain;
+  display: block;
+  flex-shrink: 0;
   filter: drop-shadow(-15px 10px 25px rgba(0,0,0,0.5));
+}
+
+.watch-small {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    transform: translateY(0px) scale(1.42) !important;
+    transform-origin: center center !important;
+  }
+.watch-big {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    transform: translateY(18px) scale(1.42) !important;
+    transform-origin: center center !important;
+  }
+/* SVG NEGRO: tamaño visual real */
+.watch-big {
+  transform: translateY(0) scale(1);
+  transform-origin: center center;
+}
+
+/* ===== BREADCRUMB RESPONSIVE ===== */
+@media screen and (max-width: 520px) {
+  .custom-banner__breadcrumb {
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .custom-banner__breadcrumb a,
+  .custom-banner__breadcrumb .separator {
+    font-size: clamp(12px, 3.5vw, 16px);
+  }
+
+  .custom-banner__breadcrumb .crumb.active {
+    font-size: clamp(14px, 4.5vw, 20px);
+    margin-left: 0;
+  }
+}
+
+/* ===== DESDE 1145px HACIA ABAJO, LA PARTE DERECHA PASA A GRIS ===== */
+@media screen and (max-width: 1145px) {
+  .hero-custom {
+    background:
+      radial-gradient(circle at 75% 50%, rgba(255,255,255,0.08), transparent 60%),
+      linear-gradient(
+        120deg,
+        #f1f1f1 55%,
+        #d9d9d9 55%,
+        #d3d3d3 65%,
+        #c9c9c9 80%,
+        #bebebe 100%
+      );
+  }
+}
+
+/* ===== DESDE 1075px: se oculta el azul y se agranda visualmente el negro ===== */
+@media screen and (max-width: 1100px) {
+  .watch-small {
+    display: none !important;
+  }
+
+  .hero-custom__image {
+    right: 3%;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .watch-big {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    transform: translateY(18px) scale(1.42) !important;
+    transform-origin: center center !important;
+  }
+}
+
+/* ===== DESDE 910px: mantenerlo grande, sin moverlo ===== */
+@media screen and (max-width: 910px) {
+  .hero-custom {
+    min-height: 185px;
+    padding: 0 4%;
+  }
+
+  .custom-banner__text {
+    max-width: 500px;
+  }
+
+  .hero-custom__image {
+    right: 3% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .watch-big {
+    width: 250px !important;
+    min-width: 250px !important;
+    max-width: 250px !important;
+    transform: translateY(18px) scale(1.42) !important;
+  }
+}
+
+/* ===== DESDE 820px: un poco menos grande para que no invada el texto ===== */
+@media screen and (max-width: 820px) {
+  .hero-custom__image {
+    right: 2% !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .watch-big {
+    transform: translateY(14px) scale(1.30) !important;
+  }
+}
+
+/* ===== DESDE 749px: desaparece el reloj negro ===== */
+@media screen and (max-width: 749px) {
+  .watch-big {
+    display: none !important;
+  }
+
+  .hero-custom {
+    min-height: 170px;
+    padding: 0 30px;
+  }
+
+  .custom-banner__text {
+    max-width: 100%;
+  }
+
+  .custom-banner__subtitle {
+    font-size: 20px;
+  }
 }
 </style>
 

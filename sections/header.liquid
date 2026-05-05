@@ -377,52 +377,75 @@
   }
 
   @media screen and (max-width: 989px) {
-    .rp-header {
-      display: none;
-    }
-
-    .rp-mobile-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      background: #000000;
-      gap: 10px;
-    }
-
-    .rp-mobile-header .rp-header__brand {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-    }
-
-    .rp-mobile-header .rp-header__logo-wrap img,
-    .rp-mobile-header .rp-header__logo-wrap .header__heading-logo {
-      width: clamp(80px, 22vw, 120px);
-      height: auto !important;
-      max-height: 44px;
-      object-fit: contain;
-    }
-
-    .rp-mobile-header__center,
-    .rp-mobile-header__title,
-    .rp-mobile-header__right {
-      display: none !important;
-    }
+  .rp-header {
+    display: none;
   }
+
+  .rp-mobile-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    min-height: 64px;
+    padding: 10px 14px;
+    background: #000000;
+    gap: 0;
+  }
+
+  .rp-mobile-header > div:first-child {
+    position: relative;
+    z-index: 3;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .rp-mobile-header .rp-header__brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    line-height: 0;
+  }
+
+  .rp-mobile-header .rp-header__logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rp-mobile-header .rp-header__logo-wrap img,
+  .rp-mobile-header .rp-header__logo-wrap .header__heading-logo {
+    width: clamp(80px, 22vw, 120px);
+    height: auto !important;
+    max-height: 44px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .rp-mobile-header__center,
+  .rp-mobile-header__title,
+  .rp-mobile-header__right {
+    display: none !important;
+  }
+}
 
   @media screen and (max-width: 480px) {
-    .rp-mobile-header {
-      padding: 8px 12px;
-    }
-
-    .rp-mobile-header .rp-header__logo-wrap img,
-    .rp-mobile-header .rp-header__logo-wrap .header__heading-logo {
-      width: clamp(80px, 22vw, 120px);
-      max-height: 38px;
-    }
+  .rp-mobile-header {
+    min-height: 58px;
+    padding: 8px 12px;
   }
+
+  .rp-mobile-header .rp-header__logo-wrap img,
+  .rp-mobile-header .rp-header__logo-wrap .header__heading-logo {
+    width: clamp(78px, 24vw, 112px);
+    max-height: 38px;
+  }
+}
 </style>
 
 <div class="header-wrapper">

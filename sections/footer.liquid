@@ -45,32 +45,39 @@
       <div class="custom-footer__col custom-footer__col--contact">
         <h3 class="custom-footer__heading">{{ section.settings.contact_heading }}</h3>
 
-          {% if settings.phone != blank %}
-            <div class="custom-footer__phone">
-              <span class="custom-footer__icon custom-footer__icon--phone">
-                {{ 'icon-phone-custom.svg' | inline_asset_content }}
-              </span>
-              <a href="tel:{{ settings.phone | replace: ' ', '' }}" class="custom-footer__link">
-                {{ settings.phone }}
-              </a>
-            </div>
-          {% endif %}
+        {% if settings.phone != blank %}
+          <div class="custom-footer__phone">
+            <span class="custom-footer__icon custom-footer__icon--phone">
+              {{ 'icon-phone-custom.svg' | inline_asset_content }}
+            </span>
+            <a href="tel:{{ settings.phone | replace: ' ', '' }}" class="custom-footer__link">
+              {{ settings.phone }}
+            </a>
+          </div>
+        {% endif %}
 
-         {% if section.settings.address != blank %}
-            <div class="custom-footer__address">
-              <span class="custom-footer__icon custom-footer__icon--address">
-                {{ 'pinMapa.svg' | inline_asset_content }}
-              </span>
+        {% if section.settings.address != blank %}
+          <div class="custom-footer__address">
+            <span class="custom-footer__icon custom-footer__icon--address">
+              {{ 'pinMapa.svg' | inline_asset_content }}
+            </span>
 
+            {% if section.settings.address_url != blank %}
               <a 
-                href="https://www.google.com/maps/search/?api=1&query={{ section.settings.address | url_encode }}" 
+                href="{{ section.settings.address_url }}"
                 target="_blank"
+                rel="noopener noreferrer"
                 class="custom-footer__link"
               >
                 {{ section.settings.address }}
               </a>
-            </div>
-          {% endif %}
+            {% else %}
+              <span class="custom-footer__link">
+                {{ section.settings.address }}
+              </span>
+            {% endif %}
+          </div>
+        {% endif %}
 
         <div class="custom-footer__social">
           {% if settings.social_instagram_link != blank %}
@@ -169,15 +176,14 @@
     },
     {
       "type": "text",
-      "id": "phone",
-      "label": "Teléfono",
-      "default": "+591 12345678"
+      "id": "address",
+      "label": "Dirección visual",
+      "default": "C. Esteban Arze 370, Cochabamba"
     },
     {
-      "type": "textarea",
-      "id": "address",
-      "label": "Dirección",
-      "default": "Av. Ejemplo #123, Santa Cruz, Bolivia"
+      "type": "url",
+      "id": "address_url",
+      "label": "URL de destino"
     }
   ],
   "presets": [

@@ -1,0 +1,163 @@
+{{ "section-about-us-custom.css" | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<section class="about-us-custom section-{{ section.id }}-padding">
+  <div class="page-width">
+
+    <!-- HERO -->
+    <div class="about-us-custom__hero">
+      <p class="about-us-custom__eyebrow">Relojes Plaza</p>
+      <h1 class="about-us-custom__title">{{ section.settings.hero_title }}</h1>
+      <div class="about-us-custom__intro rte">
+        <p>{{ section.settings.hero_text }}</p>
+      </div>
+    </div>
+
+    <!-- HISTORIA -->
+    <div class="about-us-custom__block">
+      <div class="about-us-custom__media">
+        {% if section.settings.image_1 != blank %}
+          {{ section.settings.image_1 | image_url: width: 1200 | image_tag: class: 'about-us-custom__image', loading: 'lazy' }}
+        {% else %}
+          <div class="about-us-custom__placeholder">Imagen 1</div>
+        {% endif %}
+      </div>
+
+      <div class="about-us-custom__content">
+        <h2>{{ section.settings.story_title }}</h2>
+        <p>{{ section.settings.story_text }}</p>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div class="about-us-custom__block about-us-custom__block--reverse">
+      <div class="about-us-custom__media">
+        {% if section.settings.image_2 != blank %}
+          {{ section.settings.image_2 | image_url: width: 1200 | image_tag: class: 'about-us-custom__image', loading: 'lazy' }}
+        {% else %}
+          <div class="about-us-custom__placeholder">Imagen 2</div>
+        {% endif %}
+      </div>
+
+      <div class="about-us-custom__content">
+        <h2>{{ section.settings.products_title }}</h2>
+        <p>{{ section.settings.products_text }}</p>
+      </div>
+    </div>
+
+    <!-- DIFERENCIALES -->
+    <div class="about-us-custom__features">
+      <div class="about-us-custom__feature">
+        <h3>{{ section.settings.feature_1_title }}</h3>
+        <p>{{ section.settings.feature_1_text }}</p>
+      </div>
+
+      <div class="about-us-custom__feature">
+        <h3>{{ section.settings.feature_2_title }}</h3>
+        <p>{{ section.settings.feature_2_text }}</p>
+      </div>
+
+      <div class="about-us-custom__feature">
+        <h3>{{ section.settings.feature_3_title }}</h3>
+        <p>{{ section.settings.feature_3_text }}</p>
+      </div>
+
+      <div class="about-us-custom__feature">
+        <h3>{{ section.settings.feature_4_title }}</h3>
+        <p>{{ section.settings.feature_4_text }}</p>
+      </div>
+    </div>
+
+    <!-- VISIÓN -->
+    <div class="about-us-custom__block">
+      <div class="about-us-custom__media">
+        {% if section.settings.image_3 != blank %}
+          {{ section.settings.image_3 | image_url: width: 1200 | image_tag: class: 'about-us-custom__image', loading: 'lazy' }}
+        {% else %}
+          <div class="about-us-custom__placeholder">Imagen 3</div>
+        {% endif %}
+      </div>
+
+      <div class="about-us-custom__content">
+        <h2>{{ section.settings.vision_title }}</h2>
+        <p>{{ section.settings.vision_text }}</p>
+      </div>
+    </div>
+
+    <!-- FINAL -->
+    <div class="about-us-custom__block about-us-custom__block--reverse">
+      <div class="about-us-custom__media">
+        {% if section.settings.image_4 != blank %}
+          {{ section.settings.image_4 | image_url: width: 1200 | image_tag: class: 'about-us-custom__image', loading: 'lazy' }}
+        {% else %}
+          <div class="about-us-custom__placeholder">Imagen 4</div>
+        {% endif %}
+      </div>
+
+      <div class="about-us-custom__content">
+        <h2>{{ section.settings.final_title }}</h2>
+        <p>{{ section.settings.final_text }}</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sobre nosotros custom",
+  "settings": [
+    { "type": "text", "id": "hero_title", "label": "Título principal", "default": "Sobre nosotros" },
+    { "type": "textarea", "id": "hero_text", "label": "Texto principal" },
+
+    { "type": "image_picker", "id": "image_1", "label": "Imagen 1" },
+    { "type": "text", "id": "story_title", "label": "Historia título", "default": "Nuestra historia" },
+    { "type": "textarea", "id": "story_text", "label": "Historia texto" },
+
+    { "type": "image_picker", "id": "image_2", "label": "Imagen 2" },
+    { "type": "text", "id": "products_title", "label": "Productos título", "default": "Qué ofrecemos" },
+    { "type": "textarea", "id": "products_text", "label": "Productos texto" },
+
+    { "type": "text", "id": "feature_1_title", "label": "Feature 1 título", "default": "Precios competitivos" },
+    { "type": "text", "id": "feature_1_text", "label": "Feature 1 texto" },
+
+    { "type": "text", "id": "feature_2_title", "label": "Feature 2 título", "default": "Garantía" },
+    { "type": "text", "id": "feature_2_text", "label": "Feature 2 texto" },
+
+    { "type": "text", "id": "feature_3_title", "label": "Feature 3 título", "default": "Atención personalizada" },
+    { "type": "text", "id": "feature_3_text", "label": "Feature 3 texto" },
+
+    { "type": "text", "id": "feature_4_title", "label": "Feature 4 título", "default": "Variedad" },
+    { "type": "text", "id": "feature_4_text", "label": "Feature 4 texto" },
+
+    { "type": "image_picker", "id": "image_3", "label": "Imagen 3" },
+    { "type": "text", "id": "vision_title", "label": "Visión título", "default": "Nuestra visión" },
+    { "type": "textarea", "id": "vision_text", "label": "Visión texto" },
+
+    { "type": "image_picker", "id": "image_4", "label": "Imagen 4" },
+    { "type": "text", "id": "final_title", "label": "Final título", "default": "Más que relojes" },
+    { "type": "textarea", "id": "final_text", "label": "Final texto" },
+
+    { "type": "range", "id": "padding_top", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding top", "default": 48 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "label": "Padding bottom", "default": 48 }
+  ],
+  "presets": [
+    {
+      "name": "Sobre nosotros custom"
+    }
+  ]
+}
+{% endschema %}

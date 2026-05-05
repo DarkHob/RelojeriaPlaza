@@ -1,0 +1,142 @@
+.about-us-custom {
+  background: #ffffff;
+}
+
+.about-us-custom__hero {
+  max-width: 82rem;
+  margin: 0 auto 4rem;
+  text-align: center;
+}
+
+.about-us-custom__eyebrow {
+  margin: 0 0 1rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.65);
+}
+
+.about-us-custom__title {
+  margin: 0 0 1.6rem;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1.05;
+}
+
+.about-us-custom__intro {
+  max-width: 68rem;
+  margin: 0 auto;
+}
+
+.about-us-custom__block {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.4rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.about-us-custom__media {
+  width: 100%;
+}
+
+.about-us-custom__image,
+.about-us-custom__placeholder {
+  display: block;
+  width: 100%;
+  border-radius: 1.8rem;
+  min-height: 32rem;
+}
+
+.about-us-custom__image {
+  object-fit: cover;
+  height: 100%;
+  background: #f3f3f3;
+}
+
+.about-us-custom__placeholder {
+  background: #f5f5f5;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.about-us-custom__content h2 {
+  margin: 0 0 1.2rem;
+  font-size: clamp(2.4rem, 3.4vw, 3.6rem);
+  line-height: 1.1;
+}
+
+.about-us-custom__content p {
+  margin: 0;
+  line-height: 1.75;
+  color: rgba(17, 17, 17, 0.82);
+}
+
+.about-us-custom__features {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+  margin: 1rem 0 4rem;
+}
+
+.about-us-custom__feature {
+  padding: 2rem;
+  border-radius: 1.6rem;
+  background: #f8f8f8;
+  border: 1px solid rgba(17, 17, 17, 0.06);
+}
+
+.about-us-custom__feature h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.9rem;
+}
+
+.about-us-custom__feature p {
+  margin: 0;
+  color: rgba(17, 17, 17, 0.78);
+  line-height: 1.6;
+}
+
+@media screen and (min-width: 750px) {
+  .about-us-custom__block {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 6rem;
+  }
+
+  .about-us-custom__block--reverse .about-us-custom__media {
+    order: 2;
+  }
+
+  .about-us-custom__block--reverse .about-us-custom__content {
+    order: 1;
+  }
+
+  .about-us-custom__features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 0 6rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .about-us-custom__media {
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-us-custom__image,
+  .about-us-custom__placeholder {
+    width: 82%;
+    min-height: 24rem;
+    max-height: 42rem;
+    margin: 0 auto;
+  }
+
+  .about-us-custom__features {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

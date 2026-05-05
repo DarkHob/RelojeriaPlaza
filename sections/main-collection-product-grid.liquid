@@ -51,6 +51,51 @@
     padding: 5rem 0;
   }
 
+  .catalogo-filtros-mockup {
+    margin-bottom: 2.4rem;
+  }
+
+  .catalogo-filtros-mockup__bloque + .catalogo-filtros-mockup__bloque {
+    margin-top: 1.8rem;
+  }
+
+  .catalogo-filtros-mockup__titulo {
+    margin: 0 0 0.9rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .catalogo-filtros-mockup__grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  @media screen and (max-width: 989px) {
+    .catalogo-filtros-mockup__grupo {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      padding-bottom: 0.4rem;
+      scrollbar-width: none;
+    }
+
+    .catalogo-filtros-mockup__grupo::-webkit-scrollbar {
+      display: none;
+    }
+
+    .catalogo-filtros-mockup__grupo .catalogo-filtro-btn {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      white-space: nowrap;
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .collection-promociones-grid {
       row-gap: 1.8rem;
@@ -140,47 +185,51 @@
           >
             {% assign current_handle = collection.handle %}
 
-            <div class="catalogo-filtros-mockup page-width">
+            <div class="catalogo-filtros-mockup page-width" id="CatalogoFiltrosMockup">
               <div class="catalogo-scroll-hint medium-hide large-up-hide">
                 <span>Desliza para ver más</span>
                 <span class="catalogo-scroll-hint-arrow">→</span>
               </div>
 
-              <div class="catalogo-filtros-mockup__grupo catalogo-filtros-mockup__grupo--gamas">
-                <a
-                  href="{{ routes.all_products_collection_url }}"
-                  class="catalogo-filtro-btn {% if current_handle == 'all' %}is-active{% endif %}"
-                >
-                  Todos
-                </a>
+              <div class="catalogo-filtros-mockup__bloque">
+                <p class="catalogo-filtros-mockup__titulo">Gamas</p>
 
-                <a
-                  href="{{ shop.url }}/collections/doble-a"
-                  class="catalogo-filtro-btn {% if current_handle == 'doble-a' %}is-active{% endif %}"
-                >
-                  Doble A
-                </a>
+                <div class="catalogo-filtros-mockup__grupo catalogo-filtros-mockup__grupo--gamas">
+                  <a
+                    href="{{ routes.all_products_collection_url }}"
+                    class="catalogo-filtro-btn {% if current_handle == 'all' %}is-active{% endif %}"
+                  >
+                    Todos
+                  </a>
 
-                <a
-                  href="{{ shop.url }}/collections/triple-a"
-                  class="catalogo-filtro-btn {% if current_handle == 'triple-a' %}is-active{% endif %}"
-                >
-                  Triple A
-                </a>
+                  <a
+                    href="{{ shop.url }}/collections/doble-a"
+                    class="catalogo-filtro-btn {% if current_handle == 'doble-a' %}is-active{% endif %}"
+                  >
+                    Doble A
+                  </a>
 
-                <a
-                  href="{{ shop.url }}/collections/originales"
-                  class="catalogo-filtro-btn {% if current_handle == 'originales' %}is-active{% endif %}"
-                >
-                  Originales
-                </a>
+                  <a
+                    href="{{ shop.url }}/collections/triple-a"
+                    class="catalogo-filtro-btn {% if current_handle == 'triple-a' %}is-active{% endif %}"
+                  >
+                    Triple A
+                  </a>
 
-                <a
-                  href="{{ shop.url }}/collections/doble-a-premium"
-                  class="catalogo-filtro-btn {% if current_handle == 'doble-a-premium' %}is-active{% endif %}"
-                >
-                  Doble A Premium
-                </a>
+                  <a
+                    href="{{ shop.url }}/collections/originales"
+                    class="catalogo-filtro-btn {% if current_handle == 'originales' %}is-active{% endif %}"
+                  >
+                    Originales
+                  </a>
+
+                  <a
+                    href="{{ shop.url }}/collections/doble-a-premium"
+                    class="catalogo-filtro-btn {% if current_handle == 'doble-a-premium' %}is-active{% endif %}"
+                  >
+                    Doble A Premium
+                  </a>
+                </div>
               </div>
 
               {% if section.settings.enable_filtering and collection.filters != empty %}
@@ -195,46 +244,50 @@
                   %}
                     {% assign vendor_param_name = filter.param_name %}
 
-                    <div class="catalogo-filtros-mockup__grupo catalogo-filtros-mockup__grupo--marcas">
-                      {% for value in filter.values %}
-                        {% if value.count > 0 %}
-                          {% assign custom_brand_url = collection.url %}
-                          {% assign separator = '?' %}
+                    <div class="catalogo-filtros-mockup__bloque">
+                      <p class="catalogo-filtros-mockup__titulo">Marcas</p>
 
-                          {% for current_filter in collection.filters %}
-                            {% unless current_filter.param_name == vendor_param_name %}
-                              {% if current_filter.type == 'price_range' %}
-                                {% if current_filter.min_value.value != blank %}
-                                  {% assign custom_brand_url = custom_brand_url | append: separator | append: current_filter.min_value.param_name | append: '=' | append: current_filter.min_value.value %}
-                                  {% assign separator = '&' %}
+                      <div class="catalogo-filtros-mockup__grupo catalogo-filtros-mockup__grupo--marcas">
+                        {% for value in filter.values %}
+                          {% if value.count > 0 %}
+                            {% assign custom_brand_url = collection.url %}
+                            {% assign separator = '?' %}
+
+                            {% for current_filter in collection.filters %}
+                              {% unless current_filter.param_name == vendor_param_name %}
+                                {% if current_filter.type == 'price_range' %}
+                                  {% if current_filter.min_value.value != blank %}
+                                    {% assign custom_brand_url = custom_brand_url | append: separator | append: current_filter.min_value.param_name | append: '=' | append: current_filter.min_value.value %}
+                                    {% assign separator = '&' %}
+                                  {% endif %}
+                                  {% if current_filter.max_value.value != blank %}
+                                    {% assign custom_brand_url = custom_brand_url | append: separator | append: current_filter.max_value.param_name | append: '=' | append: current_filter.max_value.value %}
+                                    {% assign separator = '&' %}
+                                  {% endif %}
+                                {% else %}
+                                  {% for active_value in current_filter.active_values %}
+                                    {% assign encoded_active_value = active_value.value | url_encode %}
+                                    {% assign custom_brand_url = custom_brand_url | append: separator | append: current_filter.param_name | append: '=' | append: encoded_active_value %}
+                                    {% assign separator = '&' %}
+                                  {% endfor %}
                                 {% endif %}
-                                {% if current_filter.max_value.value != blank %}
-                                  {% assign custom_brand_url = custom_brand_url | append: separator | append: current_filter.max_value.param_name | append: '=' | append: current_filter.max_value.value %}
-                                  {% assign separator = '&' %}
-                                {% endif %}
-                              {% else %}
-                                {% for active_value in current_filter.active_values %}
-                                  {% assign encoded_active_value = active_value.value | url_encode %}
-                                  {% assign custom_brand_url = custom_brand_url | append: separator | append: current_filter.param_name | append: '=' | append: encoded_active_value %}
-                                  {% assign separator = '&' %}
-                                {% endfor %}
-                              {% endif %}
+                              {% endunless %}
+                            {% endfor %}
+
+                            {% unless value.active %}
+                              {% assign encoded_vendor_value = value.value | url_encode %}
+                              {% assign custom_brand_url = custom_brand_url | append: separator | append: vendor_param_name | append: '=' | append: encoded_vendor_value %}
                             {% endunless %}
-                          {% endfor %}
 
-                          {% unless value.active %}
-                            {% assign encoded_vendor_value = value.value | url_encode %}
-                            {% assign custom_brand_url = custom_brand_url | append: separator | append: vendor_param_name | append: '=' | append: encoded_vendor_value %}
-                          {% endunless %}
-
-                          <a
-                            href="{{ custom_brand_url }}"
-                            class="catalogo-filtro-btn catalogo-filtro-btn--marca {% if value.active %}is-active{% endif %}"
-                          >
-                            {{ value.label }}
-                          </a>
-                        {% endif %}
-                      {% endfor %}
+                            <a
+                              href="{{ custom_brand_url }}"
+                              class="catalogo-filtro-btn catalogo-filtro-btn--marca {% if value.active %}is-active{% endif %}"
+                            >
+                              {{ value.label }}
+                            </a>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
                     </div>
                   {% endif %}
                 {% endfor %}
@@ -338,6 +391,35 @@
     {{ 'mask-arch.svg' | inline_asset_content }}
   {%- endif -%}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var storageKey = 'rp_catalogo_filtros_scroll';
+    var grupos = document.querySelectorAll('.catalogo-filtros-mockup__grupo');
+
+    grupos.forEach(function (grupo, index) {
+      var saved = sessionStorage.getItem(storageKey + '_' + index);
+
+      if (saved !== null) {
+        grupo.scrollLeft = parseInt(saved, 10);
+      }
+
+      grupo.addEventListener(
+        'scroll',
+        function () {
+          sessionStorage.setItem(storageKey + '_' + index, grupo.scrollLeft);
+        },
+        { passive: true }
+      );
+
+      grupo.querySelectorAll('a.catalogo-filtro-btn').forEach(function (link) {
+        link.addEventListener('click', function () {
+          sessionStorage.setItem(storageKey + '_' + index, grupo.scrollLeft);
+        });
+      });
+    });
+  });
+</script>
 
 {% schema %}
 {
