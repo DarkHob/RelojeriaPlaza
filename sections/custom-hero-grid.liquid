@@ -2,54 +2,58 @@
   <div class="brands-section__inner">
 
     {% for block in section.blocks %}
-      {% assign selected_collection = block.settings.collection %}
+      {% assign grid_title = block.settings.grid_title | strip %}
 
-      {% if selected_collection != blank %}
+      {% if grid_title != blank or block.settings.manual_products != blank %}
         <div class="brand-group" {{ block.shopify_attributes }}>
-          <div class="brand-header">
-            <h2 class="brand-title">
-              {{ selected_collection.title }}
-            </h2>
-          </div>
+          {% if grid_title != blank %}
+            <div class="brand-header">
+              <h2 class="brand-title">
+                {{ grid_title }}
+              </h2>
+            </div>
+          {% endif %}
 
           <div class="brand-grid">
-            {% for product in selected_collection.products limit: 5 %}
-              <a href="{{ product.url }}" class="watch-card">
-                <div class="watch-media">
-                  {% if product.featured_media %}
-                    <img
-                      src="{{ product.featured_media | image_url: width: 700 }}"
-                      alt="{{ product.featured_media.alt | default: product.title | escape }}"
-                      width="{{ product.featured_media.width }}"
-                      height="{{ product.featured_media.height }}"
-                      loading="lazy"
-                    >
-                  {% else %}
-                    {{ 'product-1' | placeholder_svg_tag: 'watch-placeholder' }}
-                  {% endif %}
-
-                  {% if product.compare_at_price > product.price %}
-                    {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
-                    <span class="watch-badge">-{{ discount_percent }}%</span>
-                  {% endif %}
-                </div>
-
-                <div class="watch-info">
-                  <div class="watch-title">
-                    {{ product.title }}
-                  </div>
-
-                  <div class="watch-price">
-                    {% if product.compare_at_price > product.price %}
-                      <span class="watch-price-old">{{ product.compare_at_price | money }}</span>
-                      <span class="watch-price-new">{{ product.price | money }}</span>
+            {% if block.settings.manual_products != blank %}
+              {% for product in block.settings.manual_products limit: 5 %}
+                <a href="{{ product.url }}" class="watch-card">
+                  <div class="watch-media">
+                    {% if product.featured_media %}
+                      <img
+                        src="{{ product.featured_media | image_url: width: 700 }}"
+                        alt="{{ product.featured_media.alt | default: product.title | escape }}"
+                        width="{{ product.featured_media.width }}"
+                        height="{{ product.featured_media.height }}"
+                        loading="lazy"
+                      >
                     {% else %}
-                      <span class="watch-price-new">{{ product.price | money }}</span>
+                      {{ 'product-1' | placeholder_svg_tag: 'watch-placeholder' }}
+                    {% endif %}
+
+                    {% if product.compare_at_price > product.price %}
+                      {% assign discount_percent = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+                      <span class="watch-badge">-{{ discount_percent }}%</span>
                     {% endif %}
                   </div>
-                </div>
-              </a>
-            {% endfor %}
+
+                  <div class="watch-info">
+                    <div class="watch-title">
+                      {{ product.title }}
+                    </div>
+
+                    <div class="watch-price">
+                      {% if product.compare_at_price > product.price %}
+                        <span class="watch-price-old">{{ product.compare_at_price | money }}</span>
+                        <span class="watch-price-new">{{ product.price | money }}</span>
+                      {% else %}
+                        <span class="watch-price-new">{{ product.price | money }}</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                </a>
+              {% endfor %}
+            {% endif %}
           </div>
         </div>
       {% endif %}
@@ -430,12 +434,20 @@
   "blocks": [
     {
       "type": "brand_collection",
-      "name": "Marca desde colección",
+      "name": "Grid de productos",
       "settings": [
         {
-          "type": "collection",
-          "id": "collection",
-          "label": "Colección a mostrar"
+          "type": "text",
+          "id": "grid_title",
+          "label": "Nombre del grid",
+          "info": "Ejemplo: Casio, Rolex, Patek Philippe."
+        },
+        {
+          "type": "product_list",
+          "id": "manual_products",
+          "label": "Productos del grid",
+          "limit": 5,
+          "info": "Selecciona los productos que quieres mostrar en este grid."
         }
       ]
     }
